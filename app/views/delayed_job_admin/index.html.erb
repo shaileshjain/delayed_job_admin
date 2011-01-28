@@ -1,11 +1,24 @@
 <p>Delayed::Job.count: <%= Delayed::Job.count %></p>
 
+<form method="get" action="/jack/delayed_job_admin/restart" class="button_to">
+  <div><input value="Restart" type="submit" /></div>
+</form>
+
+<form method="get" action="/jack/delayed_job_admin/check_status" class="button_to">
+  <div><input value="Status" type="submit" /></div>
+</form>
+
+
+<%= @status %>
+
+
 <table id="jobs">
   <thead>
     <tr>
       <th>id</th>
       <th>priority</th>
       <th>attempts</th>
+      <th>account</th>
       <th>handler</th>
       <th>last_error</th>
       <th>run_at</th>
@@ -14,6 +27,7 @@
       <th>locked_by</th>
       <th>created_at</th>
       <th>updated_at</th>
+      <th>action</th>
     </tr>
   </thead>
   <tbody>
@@ -22,7 +36,9 @@
         <td><%= job.id %></td>
         <td><%= job.priority %></td>
         <td><%= job.attempts %></td>
-        <td><%= truncate(job.handler || '-', :length => 40).gsub('--- !', '') %></td>
+        <% obj = (SmartGroup.where(:job_id => job.id).first || PendingMessage.where(:job_id => job.id).first) %>
+        <td><%= Account.find(obj.account_id).name if obj%></td>
+        <td><%= obj.name rescue obj.body if obj%></td>
         <td><%= truncate(job.last_error || '-', :length => 40) %></td>
         <td><%= job.run_at.present? ? job.run_at.to_s(:short) : '-' %></td>
         <td><%= job.locked_at.present? ? job.locked_at.to_s(:short) : '-' %></td>
@@ -30,6 +46,7 @@
         <td><%= job.locked_by || '-' %></td>
         <td><%= job.created_at.to_s(:short) %></td>
         <td><%= job.updated_at.to_s(:short) %></td>
+        <th><%= link_to("Delete", {:action => :delete, :id => job.id}, :method => :delete) %></th>
       </tr>
       <tr class="job-details" id="job-details-<%= job.id %>">
         <td colspan="11"><p><pre><%= job.to_yaml %></pre></p></td>

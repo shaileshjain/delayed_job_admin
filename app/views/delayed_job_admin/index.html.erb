@@ -1,10 +1,10 @@
-<p>Delayed::Job.count: <%= Delayed::Job.count %></p>
+<p>No. of pending background jobs: <%= Delayed::Job.count %></p>
 
-<form method="get" action="/jack/delayed_job_admin/restart" class="button_to">
+<form method="get" action="/astro/background_job_admin/restart" class="button_to">
   <div><input value="Restart" type="submit" /></div>
 </form>
 
-<form method="get" action="/jack/delayed_job_admin/check_status" class="button_to">
+<form method="get" action="/astro/background_job_admin/check_status" class="button_to">
   <div><input value="Status" type="submit" /></div>
 </form>
 
@@ -31,7 +31,7 @@
     </tr>
   </thead>
   <tbody>
-    <% Delayed::Job.all.reverse.each do |job| %>
+    <% Delayed::Job.all.sort_by{|m|m.run_at}.each do |job| %>
       <tr class="job" id="job-<%= job.id %>">
         <td><%= job.id %></td>
         <td><%= job.priority %></td>

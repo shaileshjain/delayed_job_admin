@@ -6,7 +6,11 @@ class DelayedJobAdminController < ApplicationController
     unless current_user.is_admin
       render :nil => true
     else
-      p @status = params[:current_status]
+      @status = if params[:current_status].to_s.include?("delayed_job: running")
+        params[:current_status].to_s.sub("delayed_job", "Status")
+      elsif params[:current_status].to_s.include?("no")
+        "Status: Off"
+      end
     end
   end
 

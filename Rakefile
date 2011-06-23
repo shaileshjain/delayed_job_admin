@@ -21,3 +21,12 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('README.rdoc')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+desc "Run dummy app for development"
+task :dummy do
+  cd "test/dummy" do
+    sh "rake db:setup"
+    sh "rake db:seed"
+    sh "rails server"
+  end
+end

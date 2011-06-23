@@ -2,23 +2,63 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>delayed_job_admin</title>
+    <title>Delayed::Job Admin</title>
     <style>
       /* http://meyerweb.com/eric/tools/css/reset */
       html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
-      body { margin:20px; }
-      h1 { margin:20px 0; }
-      p { margin:1em 0; }
-      table { width: 100%; }
-      th, td { padding:2px; border:1px solid #ccc; }
+      p { margin:1em 0; font-size: 14px }
+      table { width: 100%; font-size: 12px }
+      th, td { padding:5px; border:1px solid #eee; }
+      th {
+        text-align: left;
+        font-weight: normal;
+        border: 1px solid #ccc;
+        border-bottom: 2px solid #ccc;
+        background-color: #eaeaea;
+        color: #aaa
+      }
+      td {
+        background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f6f6f6)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #ffffff 0%,#f6f6f6 100%); /* Chrome10+,Safari5.1+ */
+        background: linear-gradient(top, #ffffff 0%,#f6f6f6 100%); /* W3C */
+        color: #444;
+      }
       .job-details { display:none; }
       .job-details td { padding: 0 1em; }
       .hover { background: #ddd; }
+
+      .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+      }
+      #header {
+        background: -moz-linear-gradient(top, #45484d 0%, #000000 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45484d), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #45484d 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+        background: linear-gradient(top, #45484d 0%,#000000 100%); /* W3C */
+        border-bottom: 1px solid #45484d;
+      }
+      h1 { margin: 0; padding: 10px; color: #fff; font-weight: normal }
+      #header #count { float: right; margin: 10px 20px 0 0; color: #eee; font-weight: bold }
+      #content { padding: 0 10px; margin-top: 10px }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
   </head>
   <body>
-    <h1>delayed_job_admin</h1>
-    <%= yield %>
+    <div id="header" class="clearfix">
+      <div id="count"><%= Delayed::Job.count %></div>
+      <h1>Delayed::Job Admin</h1>
+    </div>
+    <div id="content">
+      <%= yield %>
+    </div>
   </body>
 </html>

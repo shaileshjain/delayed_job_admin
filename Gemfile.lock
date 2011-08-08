@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    delayed_job_admin (1.0.3)
+    delayed_job_admin (1.0.4)
       delayed_job
       rails
 
@@ -61,6 +61,8 @@ GEM
       rake (>= 0.8.7)
     i18n (0.5.0)
     json_pure (1.4.6)
+    kaminari (0.12.4)
+      rails (>= 3.0.0)
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
@@ -115,6 +117,7 @@ DEPENDENCIES
   capybara
   delayed_job
   delayed_job_admin!
+  kaminari
   launchy
   rails
   rake

@@ -3,17 +3,13 @@ class DelayedJobAdminController < ApplicationController
   layout 'delayed_job_admin'
 
   def index
-    unless current_user.is_admin
-      render :nil => true
-    else
-      @status = if params[:current_status].to_s.include?("delayed_job: running")
-        params[:current_status].to_s.sub("delayed_job", "Status")
-      elsif params[:current_status].to_s.include?("no")
-        "Status: Off"
-      end
-      
-      @jobs = Delayed::Job.all.page(params[:page]).order("run_at desc")
+    @status = if params[:current_status].to_s.include?("delayed_job: running")
+      params[:current_status].to_s.sub("delayed_job", "Status")
+    elsif params[:current_status].to_s.include?("no")
+      "Status: Off"
     end
+    
+    @jobs = Delayed::Job.page(params[:page])
   end
 
   def restart

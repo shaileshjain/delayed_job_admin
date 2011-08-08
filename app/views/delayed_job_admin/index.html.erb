@@ -43,7 +43,7 @@
         <td><%= job.locked_by || '-' %></td>
         <td><%= job.created_at.to_s(:short) %></td>
         <td><%= job.updated_at.to_s(:short) %></td>
-        <th><%= link_to('Stop', {:action => :delete, :id => job.id}, :method => :delete) %></th>
+        <th><%= link_to('Stop', {:action => :delete, :id => job.id}, :method => :delete, :class => 'delete') %></th>
       </tr>
       <tr class="job-details" id="job-details-<%= job.id %>">
         <td colspan="11">
@@ -75,7 +75,9 @@
     );
 
     $(".job").click(function(event){
-      $(this).next("tr").toggle();
+		if (! $(this).hasClass('delete') ) {
+      		$(this).next("tr").toggle();
+		}
     });
 
   });

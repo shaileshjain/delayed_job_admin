@@ -9,7 +9,7 @@ class DelayedJobAdminController < ApplicationController
       "Status: Off"
     end
     
-    @jobs = Delayed::Job.page(params[:page])
+    @jobs = Delayed::Job.page(params[:page]).order("run_at desc")
   end
 
   def restart

@@ -11,6 +11,8 @@ class DelayedJobAdminController < ApplicationController
       elsif params[:current_status].to_s.include?("no")
         "Status: Off"
       end
+      
+      @jobs = Delayed::Job.all.page(params[:page]).order("run_at desc")
     end
   end
 

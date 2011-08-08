@@ -31,7 +31,7 @@
     </tr>
   </thead>
   <tbody>
-    <% Delayed::Job.all.reverse.each do |job| %>
+    <% @jobs.each do |job| %>
       <tr class="job" id="job-<%= job.id %>">
         <td><%= job.id %></td>
         <td><%= job.priority %></td>
@@ -61,6 +61,8 @@
     <% end %>
   </tbody>
 </table>
+
+<%= paginate @jobs %>
 
 <script>
   $(document).ready(function(){

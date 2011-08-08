@@ -31,7 +31,7 @@
     </tr>
   </thead>
   <tbody>
-    <% Delayed::Job.all.sort_by{|m|m.run_at}.each do |job| %>
+    <% Delayed::Job.all.reverse.each do |job| %>
       <tr class="job" id="job-<%= job.id %>">
         <td><%= job.id %></td>
         <td><%= job.priority %></td>

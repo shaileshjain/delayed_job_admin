@@ -1,17 +1,3 @@
-<p>No. of pending background jobs: <%= Delayed::Job.count %></p>
-
-<form method="get" action="/delayed_job_admin/restart" class="button_to">
-  <input value="Restart" type="submit" />
-</form>
-
-<form method="get" action="/delayed_job_admin/check_status" class="button_to">
-  <input value="Status" type="submit" />
-</form>
-
-
-<%= @status %>
-
-
 <table id="jobs">
   <thead>
     <tr>

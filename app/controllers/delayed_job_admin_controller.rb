@@ -3,7 +3,7 @@ class DelayedJobAdminController < ApplicationController
   layout 'delayed_job_admin'
 
   def index
-    unless current_user.admin?
+    unless current_user and current_user.admin?
         redirect_to 'http://quid.com' and return
     end
 

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    delayed_job_admin (1.0.4)
+    delayed_job_admin (1.0.6)
       delayed_job
       rails
 

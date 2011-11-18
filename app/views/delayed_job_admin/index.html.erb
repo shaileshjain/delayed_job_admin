@@ -1,9 +1,12 @@
+<%= render DelayedJobAdmin.header if DelayedJobAdmin.header %>
+
 <table id="jobs">
   <thead>
     <tr>
       <th>id</th>
       <th>priority</th>
       <th>attempts</th>
+      <th>handler</th>
       <th>last_error</th>
       <th>run_at</th>
       <th>locked_at</th>
@@ -21,15 +24,15 @@
         <td><%= job.id %></td>
         <td><%= job.priority %></td>
         <td><%= job.attempts %></td>
+        <td><%= truncate(job.handler || '-', :length => 40).gsub('--- !', '') %></td>
         <td><%= truncate(job.last_error || '-', :length => 40) %></td>
-        <td><%= job.run_at.present? ? job.run_at.to_s(:short) : '-' %></td>
-        <td><%= job.locked_at.present? ? job.locked_at.to_s(:short) : '-' %></td>
-        <td><%= job.failed_at.present? ? job.failed_at.to_s(:short) : '-' %></td>
-        <% if Delayed::Job.respond_to?( 'completed_at' ) then %><td><% job.completed_at.present? ? job.completed_at.to_s(:short) : '-' %></td><% end %>
+        <td><%= format_time(job.run_at) %></td>
+        <td><%= format_time(job.locked_at) %></td>
+        <td><%= format_time(job.failed_at) %></td>
         <td><%= job.locked_by || '-' %></td>
-        <td><%= job.created_at.to_s(:short) %></td>
-        <td><%= job.updated_at.to_s(:short) %></td>
-        <th><%= link_to('Stop', {:action => :delete, :id => job.id}, :method => :delete, :class => 'delete') %></th>
+        <td><%= format_time(job.created_at) %></td>
+        <td><%= format_time(job.updated_at) %></td>
+        <td class="actions"><% if job.failed_at %><%= link_to "retry", retry_job_delayed_job_admin_path(:job_id => job.id) %><% else %><%= link_to "run now", run_job_now_delayed_job_admin_path(:job_id => job.id) %><% end %></td>
       </tr>
       <tr class="job-details" id="job-details-<%= job.id %>">
         <td colspan="11">
@@ -66,11 +69,11 @@
       }
     );
 
-    $(".job").click(function(event){
-    if (! $(this).hasClass('delete') ) {
-          $(this).next("tr").toggle();
-    }
+    $(".job td[class!='actions']").click(function(event){
+      $(this).parents('tr').first().next("tr").toggle();
     });
 
   });
 </script>
+
+<%= render DelayedJobAdmin.footer if DelayedJobAdmin.footer %>

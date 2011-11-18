@@ -8,7 +8,7 @@
       <th>run_at</th>
       <th>locked_at</th>
       <th>failed_at</th>
-	  <th>completed_at</th>
+      <% if Delayed::Job.respond_to?( 'completed_at' ) then %><th>completed_at</th><% end %>
       <th>locked_by</th>
       <th>created_at</th>
       <th>updated_at</th>
@@ -25,7 +25,7 @@
         <td><%= job.run_at.present? ? job.run_at.to_s(:short) : '-' %></td>
         <td><%= job.locked_at.present? ? job.locked_at.to_s(:short) : '-' %></td>
         <td><%= job.failed_at.present? ? job.failed_at.to_s(:short) : '-' %></td>
-        <td><%= job.completed_at.present? ? job.completed_at.to_s(:short) : '-' %></td>
+        <% if Delayed::Job.respond_to?( 'completed_at' ) then %><td><% job.completed_at.present? ? job.completed_at.to_s(:short) : '-' %></td><% end %>
         <td><%= job.locked_by || '-' %></td>
         <td><%= job.created_at.to_s(:short) %></td>
         <td><%= job.updated_at.to_s(:short) %></td>

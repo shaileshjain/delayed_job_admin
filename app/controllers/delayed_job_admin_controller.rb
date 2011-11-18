@@ -1,18 +1,18 @@
 class DelayedJobAdminController < ApplicationController
 
+  # Delegate authetication to app controller
+  before_filter :delayed_job_admin_authentication
+
   layout 'delayed_job_admin'
 
   def index
-    unless current_user and current_user.admin?
-        redirect_to 'http://quid.com' and return
-    end
 
     @status = if params[:current_status].to_s.include?("delayed_job: running")
       params[:current_status].to_s.sub("delayed_job", "Status")
     elsif params[:current_status].to_s.include?("no")
       "Status: Off"
     end
-    
+
     @jobs = Delayed::Job.page(params[:page]).order("run_at desc")
   end
 

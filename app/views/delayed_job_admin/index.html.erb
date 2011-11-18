@@ -47,6 +47,12 @@
 
 <%= will_paginate @jobs %>
 
+<p>
+<%= if !@status.nil? && !@status.empty? then "Delayed_job service status :#{@status}" end %>
+<%= link_to 'Check current status', delayed_job_admin_check_status_path, :confirm => "Are you sure?", :title => "Restart delayed job?" %>
+<%= link_to 'Restart', delayed_job_admin_restart_path, :confirm => "Are you sure?", :title => "Restart delayed job?" %>
+</p>
+
 <script>
   $(document).ready(function(){
 
@@ -61,9 +67,9 @@
     );
 
     $(".job").click(function(event){
-		if (! $(this).hasClass('delete') ) {
-      		$(this).next("tr").toggle();
-		}
+    if (! $(this).hasClass('delete') ) {
+          $(this).next("tr").toggle();
+    }
     });
 
   });

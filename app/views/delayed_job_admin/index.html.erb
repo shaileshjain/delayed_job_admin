@@ -52,8 +52,8 @@
 
 <p>
 <%= if !@status.nil? && !@status.empty? then "Delayed_job service status :#{@status}" end %>
-<%= link_to 'Check current status', delayed_job_admin_check_status_path, :confirm => "Are you sure?", :title => "Restart delayed job?" %>
-<%= link_to 'Restart', delayed_job_admin_restart_path, :confirm => "Are you sure?", :title => "Restart delayed job?" %>
+<%= link_to( @status == 'no' ?'Start' : 'Restart', delayed_job_admin_restart_path, :confirm => "Are you sure?", :title => "Restart delayed job?" ) if controller.respond_to?( 'delayed_job_admin_restart' ) %>
+<%= link_to( 'Refresh', delayed_job_admin_check_status_path ) if controller.respond_to?( 'delayed_job_admin_check_status' ) %>
 </p>
 
 <script>

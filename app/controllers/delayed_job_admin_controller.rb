@@ -5,12 +5,16 @@ class DelayedJobAdminController < ApplicationController
 
   def index
 
-    @status = if params[:current_status].to_s.include?("delayed_job: running")
-      params[:current_status].to_s.sub("delayed_job", "Status")
-    elsif params[:current_status].to_s.include?("no")
-      "Status: Off"
-    else
-      'Not implemented'
+    # Display status when delayed_job_admin_check_status
+    # is implemented
+    if respond_to? 'delayed_job_admin_check_status'
+      @status = if params[:current_status].to_s.include?( "delayed_job:" )
+          if params[:current_status].to_s.include?( "running" )
+            params[:current_status].to_s.sub("delayed_job", "Status")
+          elsif params[:current_status].to_s.include?("no")
+            "no"
+          end
+      end
     end
 
     @jobs = Delayed::Job.page(params[:page]).order("run_at desc")

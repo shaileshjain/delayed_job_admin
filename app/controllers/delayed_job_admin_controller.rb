@@ -17,7 +17,7 @@ class DelayedJobAdminController < ApplicationController
       end
     end
 
-    @jobs = Delayed::Job.page(params[:page]).order("run_at desc")
+    @jobs = Delayed::Job.order("run_at desc").paginate(:page => params[:page])
 
     render :layout => DelayedJobAdmin.layout
 
